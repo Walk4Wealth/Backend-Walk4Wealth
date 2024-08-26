@@ -16,7 +16,7 @@ const STATUS = {
 };
 
 const ROLE = {
-  USER: "USER_BASIC",
+  USER_BASIC: "USER_BASIC",
   USER_PREMIUM: "USER_PREMIUM",
   VENDOR: "VENDOR",
 };
