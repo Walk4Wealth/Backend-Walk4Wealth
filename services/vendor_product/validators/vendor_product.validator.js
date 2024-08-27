@@ -1,15 +1,24 @@
 const { check } = require("express-validator");
 
 const createProductVendor = [
-  check("vendor_id")
+  check("name")
     .exists()
-    .withMessage("Must have vendor_id")
+    .withMessage("Must have name")
     .bail()
     .notEmpty()
     .withMessage("Can not be empty")
     .bail()
-    .isNumeric()
-    .withMessage("Must be integer"),
+    .isString()
+    .withMessage("Must be string"),
+  check("description")
+    .exists()
+    .withMessage("Must have description")
+    .bail()
+    .notEmpty()
+    .withMessage("Can not be empty")
+    .bail()
+    .isString()
+    .withMessage("Must be string/text"),
   check("points_required")
     .exists()
     .withMessage("Must have points_required")
@@ -37,15 +46,6 @@ const createProductVendor = [
     .bail()
     .isNumeric()
     .withMessage("Must be integer"),
-  check("status")
-    .exists()
-    .withMessage("Must have status")
-    .bail()
-    .notEmpty()
-    .withMessage("Can not be empty")
-    .bail()
-    .isString()
-    .withMessage("Must be string"),
 ];
 
 module.exports = {
