@@ -1,4 +1,8 @@
-const { Vendor_product, Vendor } = require("../../models");
+const {
+  Vendor_product,
+  Vendor,
+  Vendor_product_detail,
+} = require("../../models");
 const ApiError = require("../../helpers/errorHandler");
 const { STATUS } = require("../../utils/constanta");
 
@@ -30,6 +34,15 @@ const getAll = async (req) => {
   const result = await Vendor_product.findAll({
     where: whereClause,
     order: [["name", "ASC"]],
+    include: [
+      {
+        model: Vendor_product_detail,
+        as: "terms_and_conditions",
+        attributes: ["number", "description"],
+        separate: true,
+        order: [["number", "ASC"]],
+      },
+    ],
   });
   return result;
 };
@@ -38,6 +51,15 @@ const getOne = async (req) => {
   const { vendor_product_id } = req.params;
   const result = await Vendor_product.findOne({
     where: { id: vendor_product_id },
+    include: [
+      {
+        model: Vendor_product_detail,
+        as: "terms_and_conditions",
+        attributes: ["number", "description"],
+        separate: true,
+        order: [["number", "ASC"]],
+      },
+    ],
   });
   if (!result) throw ApiError.notFound("Vendor_product not found");
 
