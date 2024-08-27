@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Vendor_product.init(
     {
-      vendor_id: DataTypes.STRING,
+      vendor_id: DataTypes.INTEGER,
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
       product_img: DataTypes.TEXT,

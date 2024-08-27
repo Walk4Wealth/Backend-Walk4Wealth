@@ -8,5 +8,7 @@ const isAuthenticate = require("../middlewares/authentication");
 
 router.use(isAuthenticate);
 router.post("/", validate(createTransaction), transaction.createTransaction);
-
+router.get("/", transaction.getAllTransactions);
+router.get("/:id_transaction", transaction.getOneTransaction);
+router.get("/history", transaction.getAllByUserTransaction);
 module.exports = router;

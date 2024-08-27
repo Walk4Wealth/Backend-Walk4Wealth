@@ -1,4 +1,4 @@
-const { Transaction, User, Vendor_product } = require("../../models");
+const { Transaction, User, Vendor_product, Vendor } = require("../../models");
 const ApiError = require("../../helpers/errorHandler");
 
 const create = async (req, transaction) => {
@@ -81,14 +81,14 @@ const getAll = async (req) => {
 
 const getAllByUser = async (req) => {
   const user = req.user;
+
   const result = await Transaction.findAll({
     where: { user_id: user.id },
-    order: [["timestamp", "DESC"]],
+    order: [["createdAt", "DESC"]],
     include: [
       {
-        model: Product_vendor,
+        model: Vendor_product,
         as: "vendor_product",
-        attributes: ["name"],
       },
     ],
   });
@@ -102,7 +102,7 @@ const getOne = async (req) => {
     where: { id: id_transaction },
     include: [
       {
-        model: Product_vendor,
+        model: Vendor_product,
         as: "vendor_product",
         include: [
           {
