@@ -13,6 +13,7 @@ const LEVEL = {
 const STATUS = {
   ACTIVE: "ACTIVE",
   INACTIVE: "INACTIVE",
+  DELETED: "DELETED",
 };
 
 const ROLE = {

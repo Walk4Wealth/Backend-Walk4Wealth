@@ -5,6 +5,7 @@ const {
 } = require("../../models");
 const ApiError = require("../../helpers/errorHandler");
 const { STATUS } = require("../../utils/constanta");
+const { Op } = require("sequelize");
 
 const create = async (req) => {
   const { id_vendor } = req.body;
@@ -25,10 +26,14 @@ const create = async (req) => {
 const getAll = async (req) => {
   const { vendor_id } = req.params;
 
-  let whereClause = {};
+  let whereClause = {
+    status: {
+      [Op.notIn]: [STATUS.DELETED],
+    },
+  };
 
   if (vendor_id) {
-    whereClause = { id_vendor: vendor_id };
+    whereClause.id_vendor = vendor_id;
   }
 
   const result = await Vendor_product.findAll({
