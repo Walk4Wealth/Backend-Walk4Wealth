@@ -8,7 +8,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.User_activity, {
+        foreignKey: "user_id",
+        as: "user_activities",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+      // User.hasMany(models.Transaction, {
+      //   foreignKey: "user_id",
+      //   as: "transactions",
+      // });
     }
   }
   User.init(
@@ -19,6 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       age: DataTypes.INTEGER,
       no_telp: DataTypes.STRING,
+      weight: DataTypes.INTEGER,
+      height: DataTypes.INTEGER,
       role: DataTypes.STRING,
       level: DataTypes.STRING,
       total_points: DataTypes.INTEGER,

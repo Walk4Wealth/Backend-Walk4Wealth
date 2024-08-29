@@ -101,6 +101,7 @@ const login = async (req) => {
     id: userExist.id,
     nama: userExist.nama,
     email: userExist.email,
+    weight: userExist.weight,
     role: userExist.role,
   };
 

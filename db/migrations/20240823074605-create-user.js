@@ -26,6 +26,12 @@ module.exports = {
       no_telp: {
         type: Sequelize.STRING,
       },
+      weight: {
+        type: Sequelize.INTEGER,
+      },
+      height: {
+        type: Sequelize.INTEGER,
+      },
       role: {
         type: Sequelize.STRING,
       },

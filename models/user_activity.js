@@ -8,7 +8,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User_activity.belongsTo(models.Activity, {
+        foreignKey: "activity_id",
+        as: "activity",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
+
+      User_activity.belongsTo(models.User, {
+        foreignKey: "user_id",
+        as: "user",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
   User_activity.init(
@@ -16,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       user_id: DataTypes.INTEGER,
       activity_id: DataTypes.INTEGER,
       steps: DataTypes.INTEGER,
-      duration_miutes: DataTypes.INTEGER,
+      distanceKm: DataTypes.FLOAT,
+      duration_minutes: DataTypes.INTEGER,
       points_earned: DataTypes.INTEGER,
       calories_burn: DataTypes.INTEGER,
       timestamp: DataTypes.DATE,
