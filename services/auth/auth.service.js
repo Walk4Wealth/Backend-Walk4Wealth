@@ -59,9 +59,19 @@ const create = async (req) => {
 
   const result = await User.create(req.body);
 
+  let payload = {
+    id: result.id,
+    nama: result.nama,
+    email: result.email,
+    weight: result.weight,
+    role: result.role,
+  };
+
+  const token = jwt.sign(payload, JWT_SECRET_KEY);
+
   const resultWithoutPassword = { ...result.toJSON(), password: undefined };
 
-  return resultWithoutPassword;
+  return { user_created: resultWithoutPassword, token: token };
 };
 
 const login = async (req) => {
