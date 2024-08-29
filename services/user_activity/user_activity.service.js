@@ -37,6 +37,7 @@ const create = async (req, transaction) => {
   req.body.user_id = user.id;
   req.body.points_earned = totalPoints;
   req.body.calories_burn = caloriesBurn;
+  req.body.timestamp = Date.now();
   const result = await User_activity.create(req.body, { transaction });
 
   await User.update(
@@ -82,6 +83,9 @@ const getOne = async (req) => {
       { model: User, as: "user", attributes: { exclude: ["password"] } },
     ],
   });
+
+  if (!result) throw ApiError.notFound("User_activity not found");
+
   return result;
 };
 

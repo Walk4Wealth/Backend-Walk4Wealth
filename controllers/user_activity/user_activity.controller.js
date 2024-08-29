@@ -3,11 +3,12 @@ const {
   getAllByUser,
   getAll,
   getOne,
+  update,
 } = require("../../services/user_activity/user_activity.service");
 const responseHandler = require("../../helpers/responseHandler");
 const { sequelize } = require("../../models");
 
-const createTransaction = async (req, res, next) => {
+const createUserActivity = async (req, res, next) => {
   const transaction = await sequelize.transaction();
   try {
     const result = await create(req, transaction);
@@ -46,11 +47,31 @@ const getOneActivity = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-};  
+};
+
+const updateActivity = async (req, res, next) => {
+  try {
+    const result = await update(req);
+    return responseHandler.succes(res, "Success update user_activity", result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteActivity = async (req, res, next) => {
+  try {
+    const result = await destroy(req);
+    return responseHandler.succes(res, "Success delete user_activity", result);
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
-  createTransaction,
+  createUserActivity,
   getAllActivityByUser,
   getAllActivity,
   getOneActivity,
+  updateActivity,
+  deleteActivity,
 };
