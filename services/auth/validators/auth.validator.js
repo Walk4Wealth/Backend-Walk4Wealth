@@ -10,6 +10,15 @@ const registerValidator = [
     .bail()
     .isString()
     .withMessage("Must be string"),
+  check("username")
+    .exists()
+    .withMessage("Must have username")
+    .bail()
+    .notEmpty()
+    .withMessage("Can not be empty")
+    .bail()
+    .isString()
+    .withMessage("Must be string"),
 ];
 
 module.exports = {

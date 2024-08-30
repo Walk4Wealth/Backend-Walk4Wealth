@@ -7,14 +7,22 @@ const jwt = require("jsonwebtoken");
 const { ROLE, LEVEL } = require("../../utils/constanta");
 const { JWT_SECRET_KEY } = process.env;
 
-const checkDuplicate = async (email) => {
-  const result = await User.findOne({ where: { email } });
-  if (result) {
-    if (result) {
-      throw ApiError.badRequest("NIK / Email sudah terfaftar!");
-    }
+const checkDuplicate = async (email, username) => {
+  const resultEmail = await User.findOne({ where: { email } });
+
+  if (resultEmail) {
+    throw ApiError.badRequest("Email sudah terfaftar!");
   }
-  return result;
+
+  const resultUsername = await User.findOne({ where: { username } });
+  if (resultUsername) {
+    throw ApiError.badRequest("Username sudah terdaftar!");
+  }
+
+  return {
+    resultEmail: resultEmail?.dataValues ?? null,
+    resultUsername: resultUsername?.dataValues ?? null,
+  };
 };
 
 const create = async (req) => {
