@@ -26,9 +26,9 @@ const checkDuplicate = async (email, username) => {
 };
 
 const create = async (req) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
-  await checkDuplicate(email, password);
+  await checkDuplicate(email, username);
 
   const schemaEmail = {
     email: { type: "email", label: "Email Address" },
