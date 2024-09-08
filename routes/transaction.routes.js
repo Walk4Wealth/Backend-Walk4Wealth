@@ -12,8 +12,8 @@ router.use(isAuthenticate);
 router.use(
   hasRole([ROLE.ADMIN, ROLE.SUPER_ADMIN, ROLE.USER_BASIC, ROLE.USER_PREMIUM])
 );
+router.get("/", transaction.getAllTransactions);
+router.get("/history", transaction.getAllHistoryTransactions);
 router.post("/", validate(createTransaction), transaction.createTransaction);
 router.get("/:id_transaction", transaction.getOneTransaction);
-router.get("/history", transaction.getAllByUserTransaction);
-router.get("/", transaction.getAllTransactions);
 module.exports = router;

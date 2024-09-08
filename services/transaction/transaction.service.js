@@ -79,12 +79,12 @@ const getAll = async (req) => {
   return result;
 };
 
-const getAllByUser = async (req) => {
+const getAllTransactionHistory = async (req) => {
   const user = req.user;
 
   const result = await Transaction.findAll({
     where: { user_id: user.id },
-    order: [["createdAt", "DESC"]],
+    order: [["id", "DESC"]],
     include: [
       {
         model: Vendor_product,
@@ -123,6 +123,6 @@ const getOne = async (req) => {
 module.exports = {
   create,
   getAll,
-  getAllByUser,
+  getAllTransactionHistory,
   getOne,
 };

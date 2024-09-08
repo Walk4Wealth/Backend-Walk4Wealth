@@ -1,8 +1,8 @@
 const {
   create,
-  getAllByUser,
   getAll,
   getOne,
+  getAllTransactionHistory,
 } = require("../../services/transaction/transaction.service");
 const responseHandler = require("../../helpers/responseHandler");
 const { sequelize } = require("../../models");
@@ -21,9 +21,9 @@ const createTransaction = async (req, res, next) => {
   }
 };
 
-const getAllByUserTransaction = async (req, res, next) => {
+const getAllHistoryTransactions = async (req, res, next) => {
   try {
-    const result = await getAllByUser(req);
+    const result = await getAllTransactionHistory(req);
     return responseHandler.succes(res, "Success get all transaction", result);
   } catch (error) {
     next(error);
@@ -50,7 +50,7 @@ const getOneTransaction = async (req, res, next) => {
 
 module.exports = {
   createTransaction,
-  getAllByUserTransaction,
+  getAllHistoryTransactions,
   getAllTransactions,
   getOneTransaction,
 };

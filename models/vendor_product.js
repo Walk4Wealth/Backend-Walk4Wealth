@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
       Vendor_product.hasMany(models.Transaction, {
         foreignKey: "vendor_product_id",
-        as: "transactions",
+        as: "transaction",
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
