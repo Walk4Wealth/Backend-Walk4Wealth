@@ -21,6 +21,13 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       });
+
+      User_activity.hasMany(models.Coordinate, {
+        foreignKey: "user_activity_id",
+        as: "coordinates",
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      });
     }
   }
   User_activity.init(
@@ -28,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
       user_id: DataTypes.INTEGER,
       activity_id: DataTypes.INTEGER,
       steps: DataTypes.INTEGER,
-      distanceKm: DataTypes.FLOAT,
-      duration_minutes: DataTypes.INTEGER,
+      mileage: DataTypes.FLOAT,
+      duration_seconds: DataTypes.INTEGER,
       points_earned: DataTypes.INTEGER,
       calories_burn: DataTypes.INTEGER,
       timestamp: DataTypes.DATE,

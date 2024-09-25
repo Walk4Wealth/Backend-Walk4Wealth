@@ -17,10 +17,10 @@ module.exports = {
       steps: {
         type: Sequelize.INTEGER,
       },
-      distanceKm: {
+      mileage: {
         type: Sequelize.FLOAT,
       },
-      duration_minutes: {
+      duration_seconds: {
         type: Sequelize.INTEGER,
       },
       points_earned: {

@@ -1,4 +1,4 @@
-const { User, Activity, User_activity } = require("../../models");
+const { User, Activity, User_activity, Coordinate } = require("../../models");
 const ApiError = require("../../helpers/errorHandler");
 const {
   calculate_calories_burn,
@@ -6,8 +6,11 @@ const {
 const { calculate_points } = require("../../utils/calculate_points");
 
 const create = async (req, transaction) => {
-  const { activity_id, duration_minutes, distanceKm } = req.body;
+  const { activity_id, duration_seconds, mileage, coordinates } = req.body;
   const user = req.user;
+
+  const convertDurationToMinute = duration_seconds / 60;
+  const convertMileageToKm = mileage / 1000;
 
   const activityExist = await Activity.findOne(
     {
@@ -28,17 +31,25 @@ const create = async (req, transaction) => {
   const caloriesBurn = await calculate_calories_burn(
     activityExist.name,
     user.weight,
-    Math.floor(distanceKm),
-    duration_minutes
+    Math.floor(convertMileageToKm),
+    convertDurationToMinute
   );
 
-  const totalPoints = await calculate_points(caloriesBurn, duration_minutes);
+  const totalPoints = await calculate_points(
+    caloriesBurn,
+    convertDurationToMinute
+  );
 
   req.body.user_id = user.id;
   req.body.points_earned = totalPoints;
   req.body.calories_burn = caloriesBurn;
   req.body.timestamp = Date.now();
   const result = await User_activity.create(req.body, { transaction });
+
+  for (const coordinate of coordinates) {
+    coordinate.user_activity_id = result.id;
+    await Coordinate.create(coordinate, { transaction });
+  }
 
   await User.update(
     {
@@ -57,7 +68,10 @@ const getAllByUser = async (req) => {
   const user = req.user;
   const result = await User_activity.findAll({
     where: { user_id: user.id },
-    include: [{ model: Activity, as: "activity" }],
+    include: [
+      { model: Activity, as: "activity" },
+      { model: Coordinate, as: "coordinates", attributes: ["lat", "long"] },
+    ],
     order: [["createdAt", "DESC"]],
   });
   return result;
@@ -68,6 +82,7 @@ const getAll = async () => {
     include: [
       { model: Activity, as: "activity" },
       { model: User, as: "user", attributes: { exclude: ["password"] } },
+      { model: Coordinate, as: "coordinates", attributes: ["lat", "long"] },
     ],
     order: [["createdAt", "DESC"]],
   });
@@ -81,6 +96,7 @@ const getOne = async (req) => {
     include: [
       { model: Activity, as: "activity" },
       { model: User, as: "user", attributes: { exclude: ["password"] } },
+      { model: Coordinate, as: "coordinates", attributes: ["lat", "long"] },
     ],
   });
 
