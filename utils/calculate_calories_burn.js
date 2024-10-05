@@ -6,17 +6,20 @@ const calculate_calories_burn = async (
   distanceKm,
   durationMinutes
 ) => {
-  let caloriesConstant = 0;
+  let caloriesConstant = CALORIES_BURN.OTHER; // Default to OTHER if activity is not recognized
 
-  if (activity === "Walking") {
-    caloriesConstant = CALORIES_BURN.WALKING;
-  } else if (activity === "Jogging") {
-    caloriesConstant = CALORIES_BURN.JOGGING;
-  } else if (activity === "Running") {
-    caloriesConstant = CALORIES_BURN.RUNNING;
-  } else {
-    caloriesConstant = CALORIES_BURN.OTHER;
-    return caloriesConstant * weightKg * (durationMinutes / 60);
+  switch (activity) {
+    case "Walking":
+      caloriesConstant = CALORIES_BURN.WALKING;
+      break;
+    case "Jogging":
+      caloriesConstant = CALORIES_BURN.JOGGING;
+      break;
+    case "Running":
+      caloriesConstant = CALORIES_BURN.RUNNING;
+      break;
+    default:
+      return caloriesConstant * weightKg * (durationMinutes / 60);
   }
 
   const caloriesBurned =

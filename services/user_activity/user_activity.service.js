@@ -31,7 +31,7 @@ const create = async (req, transaction) => {
   const caloriesBurn = await calculate_calories_burn(
     activityExist.name,
     user.weight,
-    Math.floor(convertMileageToKm),
+    convertMileageToKm,
     convertDurationToMinute
   );
 
