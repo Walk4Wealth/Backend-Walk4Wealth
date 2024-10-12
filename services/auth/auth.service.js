@@ -121,6 +121,7 @@ const login = async (req) => {
     email: userExist.email,
     weight: userExist.weight,
     role: userExist.role,
+    total_points: userExist.total_points,
   };
 
   const token = jwt.sign(payload, JWT_SECRET_KEY);

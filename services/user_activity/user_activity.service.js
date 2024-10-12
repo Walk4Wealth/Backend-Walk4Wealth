@@ -53,7 +53,7 @@ const create = async (req, transaction) => {
 
   await User.update(
     {
-      points: user.points + totalPoints,
+      total_points: user.total_points + totalPoints,
     },
     {
       where: { id: user.id },
